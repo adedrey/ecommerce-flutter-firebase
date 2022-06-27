@@ -8,7 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AuthController {
-  // Login userd
+  // Login user
   Future<String> signInUsersWithEmailAndPassword(
       String email, String password) async {
     String responseMessage = "Some error occured";
@@ -19,6 +19,22 @@ class AuthController {
         responseMessage = "Success";
       } else {
         responseMessage = "Please fill all fields correctly";
+      }
+    } catch (err) {
+      responseMessage = err.toString();
+    }
+    return responseMessage;
+  }
+
+  // Reset User Password using Email
+  Future<String> resetUserPasswordWithEmail(String email) async {
+    String responseMessage = "Some error occured";
+    try {
+      if (email.isNotEmpty) {
+        await firebaseAuth.sendPasswordResetEmail(email: email);
+        responseMessage = "Success";
+      } else {
+        responseMessage = "Please fill the email field";
       }
     } catch (err) {
       responseMessage = err.toString();

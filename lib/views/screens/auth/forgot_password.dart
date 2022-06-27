@@ -1,31 +1,31 @@
 import 'package:ecommerce_app/const.dart';
 import 'package:ecommerce_app/controllers/auth_controller.dart';
-import 'package:ecommerce_app/views/screens/auth/forgot_password.dart';
+import 'package:ecommerce_app/views/screens/auth/login_screen.dart';
 import 'package:ecommerce_app/views/screens/auth/register_screen.dart';
 import 'package:ecommerce_app/views/screens/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class ForgotPasswordScreen extends StatefulWidget {
+  const ForgotPasswordScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController _emailTextController = TextEditingController();
-  final TextEditingController _passwordTextController = TextEditingController();
   bool _isLoading = false;
 
   // sign in users with email and password
 
-  _signInUserWithEmailAndPassword() async {
+  _resetPasswordWithEmail() async {
     setState(() {
       _isLoading = true;
     });
-    String response = await AuthController().signInUsersWithEmailAndPassword(
-        _emailTextController.text.trim(), _passwordTextController.text);
+    String response = await AuthController().resetUserPasswordWithEmail(
+      _emailTextController.text.trim(),
+    );
     setState(() {
       _isLoading = false;
     });
@@ -33,14 +33,13 @@ class _LoginScreenState extends State<LoginScreen> {
       return AuthController().showSnackBar(response, context);
     } else {
       _emailTextController.clear();
-      _passwordTextController.clear();
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => BottomNavBar(),
+          builder: (context) => LoginScreen(),
         ),
       );
-      Fluttertoast.showToast(msg: "Successfully signed in");
+      Fluttertoast.showToast(msg: "Kindly check your mail.");
     }
   }
 
@@ -54,6 +53,17 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Email Field
+            Text(
+              "Forgot Password",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: backgroundColor,
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             TextField(
               controller: _emailTextController,
               decoration: const InputDecoration(
@@ -74,25 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 20,
             ),
             // Password Field
-            TextField(
-              controller: _passwordTextController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                filled: true,
-                hintText: "Enter your password",
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+
             Container(
               width: screenWidth - 40,
               height: 50,
@@ -100,14 +92,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: buttonColor,
               ),
               child: InkWell(
-                onTap: _signInUserWithEmailAndPassword,
+                onTap: _resetPasswordWithEmail,
                 child: Center(
                   child: _isLoading
                       ? const CircularProgressIndicator(
                           color: Colors.white,
                         )
                       : Text(
-                          'Login',
+                          'Reset Password',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -120,53 +112,17 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Need an Account?",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RegisterScreen(),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    "Sign Up",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: buttonColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
             InkWell(
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ForgotPasswordScreen(),
+                    builder: (context) => LoginScreen(),
                   ),
                 );
               },
               child: Text(
-                "Forgot Password?",
+                "Go back",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,

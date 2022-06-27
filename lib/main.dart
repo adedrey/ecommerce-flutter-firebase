@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/user_state.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import './const.dart';
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
           // theme: ThemeData.dark().copyWith(
           //   scaffoldBackgroundColor: backgroundColor,
           // ),
-          home: LoginScreen(),
+          home: UserState(),
         );
       },
     );

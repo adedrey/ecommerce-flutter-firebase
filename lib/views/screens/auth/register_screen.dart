@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:ecommerce_app/const.dart';
 import 'package:ecommerce_app/controllers/auth_controller.dart';
+import 'package:ecommerce_app/user_state.dart';
 import 'package:ecommerce_app/views/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -61,6 +62,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         setState(() {
           _image = null;
         });
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UserState(),
+          ),
+        );
         Fluttertoast.showToast(
             msg: "Congrat! Your account has been created for you.");
       }
