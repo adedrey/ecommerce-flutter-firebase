@@ -58,6 +58,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _emailController.clear();
         _passwordController.clear();
         _usernameController.clear();
+        setState(() {
+          _image = null;
+        });
         Fluttertoast.showToast(
             msg: "Congrat! Your account has been created for you.");
       }

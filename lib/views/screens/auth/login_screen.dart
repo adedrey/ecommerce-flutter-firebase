@@ -1,9 +1,40 @@
 import 'package:ecommerce_app/const.dart';
+import 'package:ecommerce_app/controllers/auth_controller.dart';
 import 'package:ecommerce_app/views/screens/auth/register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
+  bool _isLoading = false;
+
+  // sign in users with email and password
+
+  _signInUserWithEmailAndPassword() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String response = await AuthController().signInUsersWithEmailAndPassword(
+        _emailTextController.text.trim(), _passwordTextController.text);
+    setState(() {
+      _isLoading = false;
+    });
+    if (response != "Success") {
+      return AuthController().showSnackBar(response, context);
+    } else {
+      _emailTextController.clear();
+      _passwordTextController.clear();
+      Fluttertoast.showToast(msg: "Successfully signed in");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +47,7 @@ class LoginScreen extends StatelessWidget {
           children: [
             // Email Field
             TextField(
+              controller: _emailTextController,
               decoration: const InputDecoration(
                 filled: true,
                 hintText: "Enter your email",
@@ -35,6 +67,7 @@ class LoginScreen extends StatelessWidget {
             ),
             // Password Field
             TextField(
+              controller: _passwordTextController,
               obscureText: true,
               decoration: const InputDecoration(
                 filled: true,
@@ -59,16 +92,20 @@ class LoginScreen extends StatelessWidget {
                 color: buttonColor,
               ),
               child: InkWell(
-                onTap: () {},
+                onTap: _signInUserWithEmailAndPassword,
                 child: Center(
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: textButtonColor,
-                    ),
-                  ),
+                  child: _isLoading
+                      ? const CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      : Text(
+                          'Login',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: textButtonColor,
+                          ),
+                        ),
                 ),
               ),
             ),

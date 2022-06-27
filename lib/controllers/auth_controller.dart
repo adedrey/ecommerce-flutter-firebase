@@ -8,6 +8,24 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AuthController {
+  // Login userd
+  Future<String> signInUsersWithEmailAndPassword(
+      String email, String password) async {
+    String responseMessage = "Some error occured";
+    try {
+      if (email.isNotEmpty && password.isNotEmpty) {
+        UserCredential userCredential = await firebaseAuth
+            .signInWithEmailAndPassword(email: email, password: password);
+        responseMessage = "Success";
+      } else {
+        responseMessage = "Please fill all fields correctly";
+      }
+    } catch (err) {
+      responseMessage = err.toString();
+    }
+    return responseMessage;
+  }
+
   // Sign Up Users
   Future<String> signUpUsers(
     String full_name,
