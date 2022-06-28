@@ -1,7 +1,9 @@
+import 'package:ecommerce_app/providers/products.dart';
 import 'package:ecommerce_app/user_state.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import './const.dart';
 import './views/screens/auth/login_screen.dart';
 
@@ -45,13 +47,20 @@ class MyApp extends StatelessWidget {
             ),
           );
         }
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          // theme: ThemeData.dark().copyWith(
-          //   scaffoldBackgroundColor: backgroundColor,
-          // ),
-          home: UserState(),
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (context) => Products(),
+            ),
+          ],
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            // theme: ThemeData.dark().copyWith(
+            //   scaffoldBackgroundColor: backgroundColor,
+            // ),
+            home: UserState(),
+          ),
         );
       },
     );

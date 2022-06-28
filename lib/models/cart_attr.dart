@@ -1,19 +1,19 @@
-class Product {
+import 'package:flutter/material.dart';
+
+class CartAttr with ChangeNotifier {
   String? id;
   String? title;
-  String? description;
   double? price;
   String? imageUrl;
-  String? productCategoryName;
+  String? productId;
   int? quantity;
 
-  Product({
+  CartAttr({
     this.id,
     this.title,
-    this.description,
     this.price,
     this.imageUrl,
-    this.productCategoryName,
+    this.productId,
     this.quantity,
   });
 }

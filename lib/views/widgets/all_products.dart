@@ -1,11 +1,13 @@
-import 'package:ecommerce_app/models/product.dart';
 import 'package:ecommerce_app/views/widgets/products.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/products.dart';
 
 class AllProducts extends StatelessWidget {
-  final productsList = Product.generateProducts();
   @override
   Widget build(BuildContext context) {
+    final products = Provider.of<Products>(context).products;
     return Container(
       child: Column(
         children: [
@@ -14,9 +16,9 @@ class AllProducts extends StatelessWidget {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => ProductItem(
-                product: productsList[index],
+                product: products[index],
               ),
-              itemCount: productsList.length,
+              itemCount: products.length,
               separatorBuilder: (_, index) => const SizedBox(
                 width: 5,
               ),

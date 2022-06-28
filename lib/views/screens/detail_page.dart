@@ -55,7 +55,7 @@ class DetailPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  product.productName.toString(),
+                  product.title.toString(),
                   style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,

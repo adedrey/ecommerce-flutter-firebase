@@ -2,6 +2,9 @@ import 'package:badges/badges.dart';
 import 'package:ecommerce_app/models/product.dart';
 import 'package:ecommerce_app/views/screens/detail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/products.dart';
 
 class ProductItem extends StatelessWidget {
   final Product product;
@@ -61,7 +64,7 @@ class ProductItem extends StatelessWidget {
                 ],
               ),
               Text(
-                product.productName.toString(),
+                product.title.toString(),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   height: 1.6,
