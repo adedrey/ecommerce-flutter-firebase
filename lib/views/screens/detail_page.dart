@@ -133,8 +133,8 @@ class DetailPage extends StatelessWidget {
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text(
+                              children: const [
+                                Text(
                                   'Add to Cart',
                                   style: TextStyle(
                                     // color: Colors.white,
@@ -142,7 +142,7 @@ class DetailPage extends StatelessWidget {
                                     fontSize: 20,
                                   ),
                                 ),
-                                const SizedBox(
+                                SizedBox(
                                   width: 10,
                                 ),
                                 Icon(
