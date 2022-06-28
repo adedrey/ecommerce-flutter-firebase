@@ -24,7 +24,14 @@ class Products with ChangeNotifier {
     )
   ];
 
+  // Get all products
   List<Product> get products {
     return [..._products];
+  }
+
+  // Get a product bu ID
+
+  Product findById(String productId) {
+    return _products.firstWhere((product) => product.id == productId);
   }
 }

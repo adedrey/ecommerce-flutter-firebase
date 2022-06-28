@@ -17,12 +17,8 @@ class ProductItem extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DetailPage(product: product),
-            ),
-          );
+          Navigator.pushNamed(context, DetailPage.routeName,
+              arguments: product.id);
         },
         child: Card(
           shape: RoundedRectangleBorder(
