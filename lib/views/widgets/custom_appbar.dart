@@ -8,7 +8,7 @@ class CustomAppBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(
         top: 30,
-        left: 30,
+        left: 25,
         right: 25,
       ),
       child: Row(
@@ -18,7 +18,7 @@ class CustomAppBar extends StatelessWidget {
             text: const TextSpan(
               children: [
                 TextSpan(
-                  text: "Emma, What Are You \nLooking For?",
+                  text: "Emma, What are you \nlooking for?",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 22,
