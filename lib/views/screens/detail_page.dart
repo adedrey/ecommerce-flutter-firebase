@@ -12,7 +12,7 @@ class DetailPage extends StatelessWidget {
     final productId = ModalRoute.of(context)!.settings.arguments as String;
     final product =
         Provider.of<Products>(context, listen: false).findById(productId);
-    final _cartProvider = Provider.of<CartProvider>(context, listen: false);
+    final _cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,30 +123,33 @@ class DetailPage extends StatelessWidget {
                         child: Container(
                           height: 60,
                           child: ElevatedButton(
-                            onPressed: () {
-                              _cartProvider.addProductToCart(
-                                product.id!,
-                                product.price!,
-                                product.title!,
-                                product.imageUrl!,
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .hideCurrentMaterialBanner();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: const Text(
-                                    " Added Product to Cart",
-                                  ),
-                                  duration: Duration(seconds: 2),
-                                  action: SnackBarAction(
-                                    onPressed: () {
-                                      // Remove Product from Cart
-                                    },
-                                    label: "UNDO",
-                                  ),
-                                ),
-                              );
-                            },
+                            onPressed: _cartProvider.getCartItems
+                                    .containsKey(productId)
+                                ? null
+                                : () {
+                                    _cartProvider.addProductToCart(
+                                      product.id!,
+                                      product.price!,
+                                      product.title!,
+                                      product.imageUrl!,
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .hideCurrentMaterialBanner();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          "Added Product to Cart",
+                                        ),
+                                        duration: Duration(seconds: 2),
+                                        action: SnackBarAction(
+                                          onPressed: () {
+                                            // Remove Product from Cart
+                                          },
+                                          label: "UNDO",
+                                        ),
+                                      ),
+                                    );
+                                  },
                             style: ElevatedButton.styleFrom(
                               primary: Colors.black,
                               elevation: 0,
@@ -158,19 +161,22 @@ class DetailPage extends StatelessWidget {
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
+                              children: [
                                 Text(
-                                  'Add to Cart',
-                                  style: TextStyle(
+                                  _cartProvider.getCartItems
+                                          .containsKey(product.id)
+                                      ? "In Cart"
+                                      : 'Add to Cart',
+                                  style: const TextStyle(
                                     // color: Colors.white,
                                     // fontWeight: FontWeight.bold,
                                     fontSize: 20,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
-                                Icon(
+                                const Icon(
                                   Icons.shopping_cart_outlined,
                                 ),
                               ],
