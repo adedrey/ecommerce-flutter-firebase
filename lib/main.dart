@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/providers/cart_provider.dart';
 import 'package:ecommerce_app/providers/products.dart';
 import 'package:ecommerce_app/user_state.dart';
 import 'package:ecommerce_app/views/screens/detail_page.dart';
@@ -52,6 +53,9 @@ class MyApp extends StatelessWidget {
           providers: [
             ChangeNotifierProvider(
               create: (context) => Products(),
+            ),
+            ChangeNotifierProvider(
+              create: (context) => CartProvider(),
             ),
           ],
           child: MaterialApp(

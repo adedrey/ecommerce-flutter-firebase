@@ -19,4 +19,43 @@ class CartProvider with ChangeNotifier {
     );
     return total;
   }
+
+  // Add to Cart
+  void addProductToCart(
+    String productId,
+    double price,
+    String title,
+    String imageUrl,
+  ) {
+    // Check if the product already exist in the cart
+    if (_cartItems.containsKey(productId)) {
+      _cartItems.update(
+        productId,
+        (existingCartItem) {
+          // Update the quantity and amount
+          return CartAttr(
+            id: existingCartItem.id,
+            title: existingCartItem.title,
+            price: existingCartItem.price,
+            imageUrl: existingCartItem.imageUrl,
+            quantity: existingCartItem.quantity! + 1,
+            productId: existingCartItem.productId,
+          );
+        },
+      );
+    } else {
+      _cartItems.putIfAbsent(
+        productId,
+        () => CartAttr(
+          id: DateTime.now().toString(),
+          productId: productId,
+          title: title,
+          price: price,
+          imageUrl: imageUrl,
+          quantity: 1,
+        ),
+      );
+    }
+    notifyListeners();
+  }
 }

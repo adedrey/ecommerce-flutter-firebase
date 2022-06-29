@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/models/product.dart';
+import 'package:ecommerce_app/providers/cart_provider.dart';
 import 'package:ecommerce_app/providers/products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,7 @@ class DetailPage extends StatelessWidget {
     final productId = ModalRoute.of(context)!.settings.arguments as String;
     final product =
         Provider.of<Products>(context, listen: false).findById(productId);
+    final _cartProvider = Provider.of<CartProvider>(context, listen: false);
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +123,30 @@ class DetailPage extends StatelessWidget {
                         child: Container(
                           height: 60,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              _cartProvider.addProductToCart(
+                                product.id!,
+                                product.price!,
+                                product.title!,
+                                product.imageUrl!,
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentMaterialBanner();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: const Text(
+                                    " Added Product to Cart",
+                                  ),
+                                  duration: Duration(seconds: 2),
+                                  action: SnackBarAction(
+                                    onPressed: () {
+                                      // Remove Product from Cart
+                                    },
+                                    label: "UNDO",
+                                  ),
+                                ),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               primary: Colors.black,
                               elevation: 0,
