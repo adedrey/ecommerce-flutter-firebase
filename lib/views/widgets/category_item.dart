@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/views/screens/feeds_category.dart';
 import 'package:flutter/material.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -18,17 +19,26 @@ class CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          margin: const EdgeInsets.symmetric(
-            horizontal: 10,
-          ),
-          width: 150,
-          height: 150,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              image:
-                  AssetImage('${categories[categoryIndex]['categoryImage']}'),
+        GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              FeedsCategoryScreen.routeName,
+              arguments: '${categories[categoryIndex]['categoryName']}',
+            );
+          },
+          child: Container(
+            margin: const EdgeInsets.symmetric(
+              horizontal: 10,
+            ),
+            width: 150,
+            height: 150,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                image:
+                    AssetImage('${categories[categoryIndex]['categoryImage']}'),
+              ),
             ),
           ),
         ),

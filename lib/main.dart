@@ -2,6 +2,7 @@ import 'package:ecommerce_app/providers/cart_provider.dart';
 import 'package:ecommerce_app/providers/products.dart';
 import 'package:ecommerce_app/user_state.dart';
 import 'package:ecommerce_app/views/screens/detail_page.dart';
+import 'package:ecommerce_app/views/screens/feeds_category.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
             home: UserState(),
             routes: {
               DetailPage.routeName: (context) => DetailPage(),
+              FeedsCategoryScreen.routeName: (context) => FeedsCategoryScreen(),
             },
           ),
         );

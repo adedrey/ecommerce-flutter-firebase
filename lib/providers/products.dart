@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/product.dart';
 
 class Products with ChangeNotifier {
-  List<Product> _products = [
+  final List<Product> _products = [
     Product(
       id: "gucci-oversized",
       title: "Gucci Oversized",
@@ -21,12 +21,30 @@ class Products with ChangeNotifier {
       imageUrl: "assets/images/arrival2.png",
       productCategoryName: "Clothes",
       quantity: 2,
+    ),
+    Product(
+      id: "Nokia",
+      title: "Nokia 3310",
+      description: "This is the strongest phone ever.",
+      price: 59.99,
+      imageUrl: "assets/images/CatPhones.png",
+      productCategoryName: "Phones",
+      quantity: 2,
     )
   ];
 
   // Get all products
   List<Product> get products {
     return [..._products];
+  }
+
+  // Get product by category name
+  List<Product> findByCategory(String productCategoryName) {
+    return _products
+        .where((product) => product.productCategoryName!
+            .toLowerCase()
+            .contains(productCategoryName.toLowerCase()))
+        .toList();
   }
 
   // Get a product bu ID
