@@ -5,18 +5,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CartItem extends StatelessWidget {
-  final String productId;
+import '../../models/order_attr.dart';
+import '../../providers/order_provider.dart';
 
-  const CartItem({Key? key, required this.productId}) : super(key: key);
+class OrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final _cartAttr = Provider.of<CartAttr>(context);
-    final _cartProvider = Provider.of<CartProvider>(context);
+    final _orderAttr = Provider.of<OrderAttr>(context);
+    final _orderProvider = Provider.of<OrderProvider>(context);
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, DetailPage.routeName,
-            arguments: productId);
+            arguments: _orderAttr.productId);
       },
       child: Container(
         height: 160,
@@ -37,7 +37,7 @@ class CartItem extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(
-                    _cartAttr.imageUrl!,
+                    _orderAttr.imageUrl,
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -54,19 +54,20 @@ class CartItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        _cartAttr.title!,
+                        _orderAttr.title,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                       IconButton(
-                        onPressed: () {
-                          _cartProvider.removeItem(productId);
+                        onPressed: () async {
+                          await _orderProvider
+                              .deleteOrderById(_orderAttr.orderId);
                         },
                         icon: const Icon(
                           CupertinoIcons.delete_left,
-                          color: Colors.red,
+                          color: Colors.blue,
                         ),
                       ),
                     ],
@@ -84,7 +85,7 @@ class CartItem extends StatelessWidget {
                         width: 10,
                       ),
                       Text(
-                        _cartAttr.price!.toString(),
+                        _orderAttr.price.toString(),
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -98,7 +99,7 @@ class CartItem extends StatelessWidget {
                   Row(
                     children: [
                       const Text(
-                        "Subtotal",
+                        "Order 1",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -108,7 +109,7 @@ class CartItem extends StatelessWidget {
                         width: 10,
                       ),
                       Text(
-                        "${(_cartAttr.price! * _cartAttr.quantity!).toStringAsFixed(2)}",
+                        "100",
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.pink,
@@ -133,7 +134,7 @@ class CartItem extends StatelessWidget {
                       ),
                       IconButton(
                         onPressed: () {
-                          _cartProvider.removeSingleCartItem(productId);
+                          // Remove
                         },
                         icon: const Icon(
                           CupertinoIcons.minus_rectangle,
@@ -149,7 +150,7 @@ class CartItem extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              "${_cartAttr.quantity!}",
+                              "${_orderAttr.quantity}",
                               style: const TextStyle(
                                 color: Colors.white,
                               ),
@@ -159,12 +160,7 @@ class CartItem extends StatelessWidget {
                       ),
                       IconButton(
                         onPressed: () {
-                          _cartProvider.addProductToCart(
-                            productId,
-                            _cartAttr.price!,
-                            _cartAttr.title!,
-                            _cartAttr.imageUrl!,
-                          );
+                          // ADD
                         },
                         icon: const Icon(
                           CupertinoIcons.add,

@@ -15,8 +15,9 @@ class AllProducts extends StatelessWidget {
             height: 250,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => ProductItem(
-                product: products[index],
+              itemBuilder: (context, index) => ChangeNotifierProvider.value(
+                value: products[index],
+                child: ProductItem(),
               ),
               itemCount: products.length,
               separatorBuilder: (_, index) => const SizedBox(

@@ -47,6 +47,7 @@ class AuthController {
     String full_name,
     String username,
     String email,
+    String phoneNumber,
     String password,
     Uint8List? image,
   ) async {
@@ -55,6 +56,8 @@ class AuthController {
       // Validate inputs
       if (full_name.isNotEmpty &&
           username.isNotEmpty &&
+          email.isNotEmpty &&
+          phoneNumber.isNotEmpty &&
           full_name.isNotEmpty &&
           image != null) {
         // Create user in the authentication tab
@@ -71,6 +74,7 @@ class AuthController {
             .set({
           "email": email,
           "fullName": full_name,
+          "phoneNumber": phoneNumber,
           "userName": username,
           "imageUrl": uploadedImageDownloadUrl,
           "id": userCredential.user!.uid,

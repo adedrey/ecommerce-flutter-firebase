@@ -23,7 +23,7 @@ class DetailPage extends StatelessWidget {
                 height: 500,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(
+                    image: NetworkImage(
                       product.imageUrl.toString(),
                     ),
                     fit: BoxFit.fitHeight,

@@ -7,12 +7,9 @@ import 'package:provider/provider.dart';
 import '../../providers/products.dart';
 
 class ProductItem extends StatelessWidget {
-  final Product product;
-
-  ProductItem({required this.product});
-
   @override
   Widget build(BuildContext context) {
+    final Product product = Provider.of<Product>(context);
     return Container(
       margin: const EdgeInsets.all(10),
       child: GestureDetector(
@@ -38,7 +35,7 @@ class ProductItem extends StatelessWidget {
                         topRight: Radius.circular(15),
                       ),
                       image: DecorationImage(
-                        image: AssetImage(
+                        image: NetworkImage(
                           product.imageUrl.toString(),
                         ),
                         fit: BoxFit.cover,

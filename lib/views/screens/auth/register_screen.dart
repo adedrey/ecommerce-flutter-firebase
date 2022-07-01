@@ -19,6 +19,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
 
@@ -45,6 +46,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _fullNameController.text.trim(),
         _usernameController.text.trim().toLowerCase(),
         _emailController.text.trim().toLowerCase(),
+        _phoneController.text.trim().toLowerCase(),
         _passwordController.text.trim(),
         _image, //Bit Image
       );
@@ -57,6 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         // Clear all inputs when successful
         _fullNameController.clear();
         _emailController.clear();
+        _phoneController.clear();
         _passwordController.clear();
         _usernameController.clear();
         setState(() {
@@ -168,6 +171,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               // Email Margin-bottom
+              const SizedBox(
+                height: 20,
+              ),
+              // phone Field
+              TextField(
+                controller: _phoneController,
+                decoration: const InputDecoration(
+                  filled: true,
+                  hintText: "Enter your phone number",
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              // Phone Margin-bottom
               const SizedBox(
                 height: 20,
               ),

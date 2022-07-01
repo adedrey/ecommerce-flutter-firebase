@@ -40,7 +40,7 @@ class _FeedsProductState extends State<FeedsProduct> {
                         topRight: Radius.circular(15),
                       ),
                       image: DecorationImage(
-                        image: AssetImage(product.imageUrl.toString()),
+                        image: NetworkImage(product.imageUrl.toString()),
                         fit: BoxFit.cover,
                       ),
                     ),

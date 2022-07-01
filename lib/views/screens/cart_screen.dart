@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/providers/cart_provider.dart';
+import 'package:ecommerce_app/providers/order_provider.dart';
 import 'package:ecommerce_app/views/widgets/cart_empty.dart';
 import 'package:ecommerce_app/views/widgets/cart_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,12 +8,19 @@ import 'package:provider/provider.dart';
 
 import '../../const.dart';
 
-class CartScreen extends StatelessWidget {
-  const CartScreen({Key? key}) : super(key: key);
+class CartScreen extends StatefulWidget {
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
 
+class _CartScreenState extends State<CartScreen> {
+  bool _isLoading = false;
+
+  // const CartScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final _cartProvider = Provider.of<CartProvider>(context);
+    final _orderProdvider = Provider.of<OrderProvider>(context, listen: false);
     return Scaffold(
       appBar: _cartProvider.getCartItems.isEmpty
           ? null
@@ -64,7 +72,17 @@ class CartScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        setState(() {
+                          _isLoading = true;
+                        });
+                        await _orderProdvider
+                            .checkoutToOrders(_cartProvider.getCartItems);
+                        setState(() {
+                          _isLoading = false;
+                        });
+                        _cartProvider.clear();
+                      },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.black,
                         shape: RoundedRectangleBorder(
@@ -77,22 +95,28 @@ class CartScreen extends StatelessWidget {
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text(
-                              "Checkout",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Icon(
-                              Icons.shopping_cart_checkout,
-                              size: 18,
-                            )
-                          ],
+                          children: _isLoading
+                              ? [
+                                  const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
+                                ]
+                              : const [
+                                  Text(
+                                    "Checkout",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Icon(
+                                    Icons.shopping_cart_checkout,
+                                    size: 18,
+                                  )
+                                ],
                         ),
                       ),
                     ),
