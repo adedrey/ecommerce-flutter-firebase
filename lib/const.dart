@@ -15,7 +15,7 @@ List<Widget> pages = [
   FeedsScreen(),
   SearchScreen(),
   CartScreen(),
-  UploadScreen(),
+  UploadProductForm(),
   ProfileScreen(),
 ];
 

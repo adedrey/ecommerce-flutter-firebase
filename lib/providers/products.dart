@@ -55,6 +55,16 @@ class Products with ChangeNotifier {
   Product findById(String productId) {
     return _products.firstWhere((product) => product.id == productId);
   }
+
+  // Get all products by query
+  List<Product> searchProducts(String searchText) {
+    List<Product> _searchList = _products
+        .where((element) =>
+            element.title!.toLowerCase().contains(searchText.toLowerCase()))
+        .toList();
+
+    return [..._searchList];
+  }
 }
 
 // final List<Product> _products = [

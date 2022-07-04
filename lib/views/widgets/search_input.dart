@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/views/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 
 class SearchInput extends StatelessWidget {
@@ -13,6 +14,15 @@ class SearchInput extends StatelessWidget {
           Flexible(
             flex: 1,
             child: TextField(
+              readOnly: true,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SearchScreen(),
+                  ),
+                );
+              },
               decoration: InputDecoration(
                 fillColor: Colors.white,
                 filled: true,
